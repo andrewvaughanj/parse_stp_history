@@ -211,16 +211,23 @@ def calculate_stats(path_to_repo):
 
         if owners == vijay_set:
             # Is this file exclusively owned by Vijay/David?
-            print("Complete", fname)
+            ownership = "Complete"
         elif vijay_set & owners:
             # If this file partially owned by Vijay/David?
-            print("Partial owner", fname)
+            ownership = "Partial"
         elif before_last_date:
             # Did this file exist before Vijay's last commit?
-            print("Inherited date", fname)
+            ownership = "Inherited"
         else:
             # Did it come afterwards?
-            print("None", fname)
+            ownership = "None"
+
+        formatted_date = added_date.strftime("%c %z")
+        print(
+            "{ownership:s} -- {name:s} (first added: {date:s})".format(
+                ownership=ownership, name=fname, date=formatted_date
+            )
+        )
 
 
 def main():
